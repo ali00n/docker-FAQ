@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  nodeapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "8501:8501" 
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: satisfaction_db
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: satisfaction_db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
